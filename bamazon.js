@@ -8,3 +8,28 @@ var connection = mysql.createConnection({
     password: "Mowgli1!",
     database: "bamazon"
 });
+connection.connect(function (err) {
+    if (err) throw err;
+    shop();
+});
+
+function shop() {
+    inquirer.prompt({
+        name: "action",
+        type: "rawlist",
+        message: "Welcome to Bamazon, what would you like to do?",
+        choices: ["Purchase item", "Exit"]
+    }).then(function (answer) {
+
+        switch (answer.action) {
+            case "Purchase item":
+                displayProducts();
+                break;
+
+            case "Exit":
+                connection.end();
+                break;
+        }
+    });
+}
+
